@@ -1,52 +1,69 @@
 # blog-app
 
-# Welcome to your Expo app 👋
+Bem-vindo ao repositório `blog-app`.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este projeto é um aplicativo móvel criado com Expo + React Native e usa o roteamento baseado em arquivos (expo-router).
 
-## Get started
+## Visão geral
 
-1. Install dependencies
+- Backend (API): o app espera um backend rodando em `http://<host>:3000` com os endpoints usados no projeto. Exemplos:
+  - `GET /posts` — lista de postagens
+  - `GET /posts/search?q=...` — busca por termo
+  - `GET /posts/:id` — (opcional) detalhamento por id
+- Frontend: app Expo com rotas em `app/(tabs)` e `app/(postagem)`.
 
-   ```bash
-   npm install
-   ```
+## Instalação (desenvolvimento)
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+1. Instale dependências:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Inicie o projeto (Expo):
 
-## Learn more
+```bash
+npm run start
+# ou
+npm run android
+# ou
+npm run ios
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+No terminal do Expo você verá opções para abrir no emulador Android, iOS ou no Expo Go.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Observação sobre `localhost` / emulador
 
-## Join the community
+- Android emulator (Android Studio): use `10.0.2.2` para alcançar o `localhost` da sua máquina. O app já detecta isso automaticamente (em `app/(tabs)/index.tsx`).
+- iOS simulator e web: `localhost` normalmente funciona.
+- Dispositivo físico: substitua `localhost` pelo IP da sua máquina (por exemplo `http://192.168.1.10:3000`) ou use o túnel do Expo.
 
-Join our community of developers creating universal apps.
+## Como usar
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Tela inicial: `app/(tabs)/index.tsx` — lista de postagens. Use o campo "Buscar postagens" para pesquisar (chama `/posts/search?q=...`).
+- Detalhes: ao tocar numa postagem, o app navega para `/(postagem)/[id]` e mostra o conteúdo detalhado.
+
+## Estrutura principal
+
+- `app/(tabs)` — rotas das abas (Home, Carrinho, Notificações, Perfil)
+- `app/(postagem)` — rotas de postagem (detalhes)
+- `components/` — componentes compartilhados
+- `assets/` — imagens e ícones
+
+## Desenvolvimento e verificações
+
+- Lint: `npm run lint` (usando ESLint configurado pelo Expo)
+- Para testes manuais no dispositivo, lembre-se de ajustar o host da API se necessário.
+
+## Boas práticas antes de PR
+
+- Rode `npm install` e certifique-se que o app inicializa no emulador.
+- Verifique endpoints do backend e teste listagem/busca/detalhes.
+
+## Suporte
+
+Se precisar de ajuda com configuração de backend, rede (localhost vs device) ou quiser que eu adicione CI/linters, me diga e eu configuro.
+
+---
+
+Commitado e pronto para desenvolvimento.
