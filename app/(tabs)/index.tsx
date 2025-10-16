@@ -1,8 +1,7 @@
-
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Platform, RefreshControl, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Index() {
@@ -11,39 +10,36 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState<string>('');
+  const [refreshing, setRefreshing] = useState(false);
   const isMountedRef = useRef(true);
+
+  const fetchPosts = async (q?: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+      const url = q ? `http://${host}:3000/posts/search?q=${encodeURIComponent(q)}` : `http://${host}:3000/posts`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      if (isMountedRef.current) setPosts(json?.data?.posts || json?.posts || []);
+    } catch (err: any) {
+      if (isMountedRef.current) setError(err.message || 'Erro ao buscar posts');
+    } finally {
+      if (isMountedRef.current) setLoading(false);
+    }
+  };
 
   useEffect(() => {
     isMountedRef.current = true;
-    const fetchPosts = async (q?: string) => {
-      setLoading(true);
-      setError(null);
-      try {
-        const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
-        const url = q ? `http://${host}:3000/posts/search?q=${encodeURIComponent(q)}` : `http://${host}:3000/posts`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
-        if (isMountedRef.current) setPosts(json?.data?.posts || json?.posts || []);
-      } catch (err: any) {
-        if (isMountedRef.current) setError(err.message || 'Erro ao buscar posts');
-      } finally {
-        if (isMountedRef.current) setLoading(false);
-      }
-    };
-
-    // initial load
     fetchPosts();
-
     return () => {
       isMountedRef.current = false;
     };
   }, []);
 
   const handleSearch = async (q?: string) => {
-    // if q is undefined use current query state
     const searchQ = typeof q === 'string' ? q : query;
-    // if empty, reload all posts
     try {
       setLoading(true);
       setError(null);
@@ -58,6 +54,12 @@ export default function Index() {
     } finally {
       if (isMountedRef.current) setLoading(false);
     }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchPosts(query);
+    setRefreshing(false);
   };
 
   return (
@@ -76,7 +78,12 @@ export default function Index() {
         />
       </View>
       <Text style={styles.sectionTitle}>Postagens</Text>
-      <ScrollView contentContainerStyle={styles.postsContainer}>
+      <ScrollView
+        contentContainerStyle={styles.postsContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {loading && (
           <View style={{ padding: 20 }}>
             <ActivityIndicator size="small" color="#000" />
@@ -156,7 +163,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 5,
-
   },
   postContent: {
     fontSize: 14,
