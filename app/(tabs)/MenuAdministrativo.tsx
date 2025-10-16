@@ -1,11 +1,9 @@
-import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons'; // Para a barra inferior (usando Expo)
 import React from 'react';
 import {
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity
 } from 'react-native';
 
 export default function AdminMenuScreen() {
@@ -35,25 +33,6 @@ export default function AdminMenuScreen() {
           Utilize essa opção para adicionar, editar ou excluir professores do aplicativo
         </Text>
       </TouchableOpacity>
-
-      {/* Barra de navegação inferior */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity>
-          <Ionicons name="home" size={24} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Feather name="info" size={24} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Feather name="shopping-cart" size={24} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={24} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <MaterialIcons name="person-outline" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }

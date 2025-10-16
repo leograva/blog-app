@@ -49,7 +49,7 @@ export default function CriarPostagem() {
       <Text style={styles.label}>Título</Text>
       <TextInput
         style={styles.input}
-        placeholder="Digite aqui o e-mail"
+        placeholder="Digite aqui o título da postagem"
         value={titulo}
         onChangeText={setTitulo}
       />
@@ -57,7 +57,7 @@ export default function CriarPostagem() {
       <Text style={styles.label}>Autor</Text>
       <TextInput
         style={styles.input}
-        placeholder="Digite aqui o nome do autor"
+        placeholder="Digite aqui o nome do autor da postagem"
         value={autor}
         onChangeText={setAutor}
       />
@@ -65,7 +65,7 @@ export default function CriarPostagem() {
       <Text style={styles.label}>Conteúdo</Text>
       <TextInput
         style={[styles.input, styles.textArea]}
-        placeholder="Digite aqui o conteúdo do post"
+        placeholder="Digite aqui o conteúdo da postagem"
         value={conteudo}
         onChangeText={setConteudo}
         multiline
