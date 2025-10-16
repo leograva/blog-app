@@ -23,7 +23,7 @@ export default function Layout() {
             return <Ionicons name="cart-outline" size={size} color={color} />;
           } else if (route.name === 'notifications') {
             return <Ionicons name="notifications-outline" size={size} color={color} />;
-          } else if (route.name === 'profile') {
+          } else if (route.name === 'CriarPostagem') {
             return <Ionicons name="person-outline" size={size} color={color} />;
           }
           return <Ionicons name="alert-circle-outline" size={size} color={color} />;
@@ -33,29 +33,15 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarLabel: 'Home'
+          title: 'Postagens',
+          tabBarLabel: 'Postagens'
         }}
       />
       <Tabs.Screen
-        name="cart"
+        name="CriarPostagem"
         options={{
-          title: 'Carrinho',
-          tabBarLabel: 'Carrinho'
-        }}
-      />
-      <Tabs.Screen
-        name="notifications"
-        options={{
-          title: 'Notificações',
-          tabBarLabel: 'Notificações'
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Perfil',
-          tabBarLabel: 'Perfil'
+          title: 'Criação de Postagem',
+          tabBarLabel: 'Criação de Postagem'
         }}
       />
     </Tabs>

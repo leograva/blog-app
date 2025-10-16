@@ -93,10 +93,11 @@ export default function Index() {
           <TouchableOpacity
             key={post.id}
             style={styles.postCard}
-            onPress={() => router.push({ pathname: '/(postagem)/[id]', params: { id: post.id, title: post.title, content: post.content } })}
+            onPress={() => router.push({ pathname: '/(postagem)/[id]', params: { id: post.id, title: post.title, content: post.content, author: post.author } })}
           >
             <Text style={styles.postTitle}>{post.title}</Text>
-            <Text style={styles.postContent}>{post.content}</Text>
+            <Text style={styles.postAuthor}>{post.author}</Text>
+            <Text style={styles.postContent}>{post.content.substring(0, 50)}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -150,6 +151,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
+  },
+  postAuthor:{
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 5,
+
   },
   postContent: {
     fontSize: 14,

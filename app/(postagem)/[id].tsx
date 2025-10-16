@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 export default function PostagemDetalhada() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  const { title = 'Título da Postagem', content = '' } = params;
+  const { title = '', content = '', author = '' } = params;
 
   return (
     <View style={styles.container}>
@@ -15,9 +15,10 @@ export default function PostagemDetalhada() {
         }} 
       />
 
-      {/* Título */}
+      {/* Título e autor */}
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{title}</Text>
+        <Text style={styles.author}>{author}</Text>
       </View>
 
       {/* Corpo do texto */}
@@ -51,6 +52,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  author:{
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
   },
